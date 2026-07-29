@@ -8,15 +8,29 @@ implementados a mano con `socket`, `ssl` y `urllib`.
 Pensado para funcionar al **100% en Termux (Android)** y también en **Kali/Debian**.
 
 ```
-   ▟█▙                                         ▟█▙
-  ▟███▙▖         ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖         ▗▟███▙
- ▟██████▙▄▄▄▄▄▟██████████████████████▙▄▄▄▄▄▟██████▙
- ▜████████████████████▛▀▀▀▀▀▜████████████████████▛
-  ▀▜██████████████████▙▄▄▄▄▄▟██████████████████▛▀
-     ▀▀▜████████████████████████████████████▛▀▀
-          ▀▀▀▀▜██████████████████████▛▀▀▀▀
+              ░▒░                  ░▒░
+        ░▓▓▓▓▓█▒     ▒        ▒     ░█▓▓▓▓▓░
+      ▒█████████▒    ██▓    ▒██    ▒█████████▒
+    ▒████████████▓   ▓█████████   ▓████████████▒
+   ████████████████▓░░████████░░▓████████████████
+ ░████████████████████████████████████████████████░
+ ▒   ▒████████████████████████████████████████▒   ▒
+      ▒█▒░▒▓████████████████████████████▓▒░▒█▒
+             ▓█████████████████████████░
+              ▓▒░▒▓██████████████▓▒░▒█
+                    ▓██████████▓
+                     ▓█████████
+                        ████░
+                        ▓▓█▓░
+                         ░█
 
-              T E R M U X - T O O L
+    ████████╗███████╗██████╗ ███╗   ███╗██╗   ██╗██╗  ██╗
+    ╚══██╔══╝██╔════╝██╔══██╗████╗ ████║██║   ██║╚██╗██╔╝
+       ██║   █████╗  ██████╔╝██╔████╔██║██║   ██║ ╚███╔╝
+       ██║   ██╔══╝  ██╔══██╗██║╚██╔╝██║██║   ██║ ██╔██╗
+       ██║   ███████╗██║  ██║██║ ╚═╝ ██║╚██████╔╝██╔╝ ██╗
+       ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝
+              ▓▒░  T · O · O · L  ░▒▓
 ```
 
 ---
@@ -25,7 +39,7 @@ Pensado para funcionar al **100% en Termux (Android)** y también en **Kali/Debi
 
 - **47 herramientas** repartidas en 5 categorías.
 - **Script central** (`termux-tool.py`) que orquesta los módulos, que viven separados en `modules/`.
-- Tema de color **naranja/rojo** con ANSI 256 y ASCII art de murciélago.
+- Tema de color **naranja/rojo** con ANSI 256 y ASCII art de murciélago (silueta real convertida a bloques Unicode).
 - **Cero dependencias externas** → no pelea con el gestor de paquetes de Termux.
 - **Sin root**: el escaneo usa TCP `connect()` (no SYN raw), el DNS es cliente UDP.
 - Multihilo (`concurrent.futures`) para escaneos rápidos.
