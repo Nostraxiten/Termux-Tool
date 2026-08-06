@@ -1,11 +1,11 @@
 # Termux-Tool
 
-Framework ofensivo de **reconocimiento, OSINT, escaneo y análisis de seguridad**,
-escrito **100% en Python de la biblioteca estándar**. Sin dependencias `pip`, sin
-root y **sin binarios externos**: los protocolos (DNS, WHOIS, TCP, TLS, HTTP) están
-implementados a mano con `socket`, `ssl` y `urllib`.
+Offensive framework for **reconnaissance, OSINT, scanning and security analysis**,
+written **100% in Python from the standard library**. No `pip` dependencies, no
+root and **no external binaries**: protocols (DNS, WHOIS, TCP, TLS, HTTP) are
+implemented from scratch using `socket`, `ssl` and `urllib`.
 
-Pensado para funcionar al **100% en Termux (Android)** y también en **Kali/Debian**.
+Designed to run **100% on Termux (Android)** and also on **Kali/Debian**.
 
 ```
               ░▒░                       ░▒░
@@ -35,18 +35,18 @@ Pensado para funcionar al **100% en Termux (Android)** y también en **Kali/Debi
 
 ---
 
-## Características
+## Features
 
-- **47 herramientas** repartidas en 5 categorías.
-- **Script central** (`termux-tool.py`) que orquesta los módulos, que viven separados en `modules/`.
-- Tema de color **naranja/rojo** con ANSI 256 y ASCII art de murciélago (silueta real convertida a bloques Unicode).
-- **Cero dependencias externas** → no pelea con el gestor de paquetes de Termux.
-- **Sin root**: el escaneo usa TCP `connect()` (no SYN raw), el DNS es cliente UDP.
-- Multihilo (`concurrent.futures`) para escaneos rápidos.
+- **47 tools** distributed across 5 categories.
+- **Central script** (`termux-tool.py`) that orchestrates modules, which live separately in `modules/`.
+- **Orange/red** color theme with ANSI 256 and bat ASCII art (real silhouette converted to Unicode blocks).
+- **Zero external dependencies** → no conflicts with Termux package manager.
+- **No root**: scanning uses TCP `connect()` (not raw SYN), DNS is UDP client.
+- Multithreading (`concurrent.futures`) for fast scanning.
 
 ---
 
-## Instalación
+## Installation
 
 ### Termux (Android)
 ```bash
@@ -63,122 +63,122 @@ cd Termux-Tool
 python3 termux-tool.py
 ```
 
-O simplemente:
+Or simply:
 ```bash
 bash install.sh
 ```
 
 ---
 
-## Uso
+## Usage
 
-Lanza el menú central:
+Launch the main menu:
 ```bash
 python termux-tool.py
 ```
 
-Cada módulo también se puede ejecutar suelto:
+Each module can also be run standalone:
 ```bash
 python modules/osint.py
 python modules/active.py
 ```
 
-Navegas con números; `0` vuelve atrás o sale. `Ctrl+C` corta la herramienta actual
-sin cerrar el framework.
+Navigate using numbers; `0` goes back or exits. `Ctrl+C` stops the current tool
+without closing the framework.
 
 ---
 
-## Estructura
+## Structure
 
 ```
 Termux-Tool/
-├── termux-tool.py        # launcher central
+├── termux-tool.py        # central launcher
 ├── core/
-│   ├── banner.py         # paleta de color + ASCII art
-│   ├── ui.py             # menús y salida
-│   └── net.py            # HTTP, DNS propio (UDP), WHOIS, sockets
+│   ├── banner.py         # color palette + ASCII art
+│   ├── ui.py             # menus and output
+│   └── net.py            # HTTP, custom DNS (UDP), WHOIS, sockets
 ├── modules/
 │   ├── osint.py          # OSINT & recon
-│   ├── passive.py        # escaneo pasivo
-│   ├── active.py         # escaneo activo / agresivo
-│   ├── analysis.py       # análisis seguridad & red
-│   └── basictools.py     # utilidades básicas
+│   ├── passive.py        # passive scanning
+│   ├── active.py         # active / aggressive scanning
+│   ├── analysis.py       # security & network analysis
+│   └── basictools.py     # basic utilities
 ├── data/
-│   ├── subdomains.txt    # wordlist subdominios
-│   └── dirs.txt          # wordlist rutas web
+│   ├── subdomains.txt    # subdomains wordlist
+│   └── dirs.txt          # web paths wordlist
 ├── install.sh
-├── requirements.txt      # (vacío: todo es stdlib)
+├── requirements.txt      # (empty: all stdlib)
 └── README.md
 ```
 
 ---
 
-## Catálogo de herramientas
+## Tools Catalog
 
-**OSINT & Reconocimiento**
-1. IP / Host Info (geolocalización, ISP, ASN)
-2. WHOIS (recursivo vía IANA, socket puerto 43)
-3. Registros DNS (resolver propio: A, AAAA, MX, NS, TXT, SOA, CNAME)
+**OSINT & Reconnaissance**
+1. IP / Host Info (geolocation, ISP, ASN)
+2. WHOIS (recursive via IANA, socket port 43)
+3. DNS Records (custom resolver: A, AAAA, MX, NS, TXT, SOA, CNAME)
 4. Reverse DNS (PTR)
-5. Certificado SSL/TLS (emisor, validez, SANs, versión/cipher)
-6. GitHub OSINT (perfil + repos + lenguajes)
-7. Wayback Machine (URLs archivadas)
-8. Fingerprint HTTP / detección de tecnologías
-9. Phone Info offline (E.164, código de país)
-10. Username OSINT (presencia en ~18 redes)
+5. SSL/TLS Certificate (issuer, validity, SANs, version/cipher)
+6. GitHub OSINT (profile + repos + languages)
+7. Wayback Machine (archived URLs)
+8. HTTP Fingerprint / technology detection
+9. Phone Info offline (E.164, country code)
+10. Username OSINT (presence on ~18 networks)
 
-**Escaneo Pasivo**
-1. DNS Enum (registros + hostnames comunes)
-2. Subdominios vía crt.sh (Certificate Transparency)
+**Passive Scanning**
+1. DNS Enum (records + common hostnames)
+2. Subdomains via crt.sh (Certificate Transparency)
 3. robots.txt & sitemap.xml
 4. security.txt
-5. Auditoría de cabeceras de seguridad (con nota A–F)
-6. Análisis de cookies (Secure/HttpOnly/SameSite)
+5. Security headers audit (with A–F grade)
+6. Cookie analysis (Secure/HttpOnly/SameSite)
 7. Email harvester
-8. Detección de CMS por rutas
-9. Meta info del HTML (generator, comentarios)
+8. CMS detection by paths
+9. HTML meta info (generator, comments)
 
-**Escaneo Activo / Agresivo**
-1. Escaneo rápido (top ~50 puertos)
-2. Escaneo de rango de puertos
+**Active / Aggressive Scanning**
+1. Quick scan (top ~50 ports)
+2. Port range scanning
 3. Banner grabbing
-4. Barrido de red / host sweep (TCP ping)
+4. Network sweep / host sweep (TCP ping)
 5. Directory bruteforce
 6. Subdomain bruteforce
 7. HTTP methods
 8. Web crawler
 9. VHost scan
-10. Detección de servicios
+10. Service detection
 
-**Análisis Seguridad & Red**
-1. Info de red local (IP salida, gateway, IP pública)
-2. IP pública + geo
-3. Fortaleza de contraseña (entropía)
-4. Generador de contraseñas (secrets)
-5. Generador de hashes (md5→blake2b)
-6. Identificador de hash
+**Security & Network Analysis**
+1. Local network info (exit IP, gateway, public IP)
+2. Public IP + geo
+3. Password strength (entropy)
+4. Password generator (secrets)
+5. Hash generator (md5→blake2b)
+6. Hash identifier
 7. Encoder/Decoder (base64/hex/url/rot13)
-8. Test de conectividad TCP
+8. TCP connectivity test
 9. HTTP status / uptime
-10. TCP latency (ping por TCP)
+10. TCP latency (TCP ping)
 
-**Toolkit Seguridad Básica**
-1. MAC aleatoria
+**Basic Security Toolkit**
+1. Random MAC
 2. Tokens / UUID
-3. Hash de fichero
-4. Entropía de texto (Shannon)
-5. Cifrados clásicos (Caesar/XOR/ROT13)
-6. Generador de wordlist
-7. Generador de User-Agents
-8. Calculadora de subred (CIDR)
+3. File hash
+4. Text entropy (Shannon)
+5. Classic ciphers (Caesar/XOR/ROT13)
+6. Wordlist generator
+7. User-Agents generator
+8. Subnet calculator (CIDR)
 
 ---
 
-## Aviso legal
+## Legal Notice
 
-Esta herramienta es para **auditar sistemas propios o con autorización explícita**,
-y para aprendizaje. Escanear infraestructura de terceros sin permiso puede ser ilegal.
-El uso que hagas es tu responsabilidad.
+This tool is for **auditing your own systems or with explicit authorization**,
+and for educational purposes. Scanning third-party infrastructure without permission may be illegal.
+Your use is your responsibility.
 
 ---
 
